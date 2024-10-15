@@ -45,6 +45,7 @@ export const StickyNotes = () => {
         <div>
           <label htmlFor="note-content">Note Content</label>
           <textarea
+          placeholder="Note Content"
             value={createNote.content}
             onChange={(event) =>
               setCreateNote({ ...createNote, content: event.target.value })
