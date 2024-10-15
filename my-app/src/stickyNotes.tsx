@@ -88,7 +88,7 @@ export const StickyNotes = () => {
                   likedNotes={likedNotes}
                   setLikedNotes={setLikedNotes}
                 />
-                <button
+                <button data-testid={`delete-button-${note.id}`}
                   onClick={() => {
                     setNotes(notes.filter((n) => n.id !== note.id));
                     setLikedNotes(likedNotes.filter((n) => n.id !== note.id));

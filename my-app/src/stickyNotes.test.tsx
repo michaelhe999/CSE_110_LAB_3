@@ -1,5 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { StickyNotes } from "./stickyNotes";
+import { dummyNotesList } from "./constant";
+import userEvent from "@testing-library/user-event";
+import exp from "constants";
 
 describe("Create StickyNote", () => {
  test("renders create note form", () => {
@@ -31,3 +34,51 @@ describe("Create StickyNote", () => {
    expect(newNoteContent).toBeInTheDocument();
  });
 });
+
+describe("Read StickyNote", () => {
+    test("renders default page content", () => {
+        render(<StickyNotes />);
+
+        dummyNotesList.forEach((note) => {
+            const titleElement = screen.getByText(note.title);
+            const element = screen.getByText(note.content);
+            expect(element).toBeInTheDocument();
+        });
+    });
+
+});
+
+describe("Update StickyNote", () => {
+    test("updates a note", () => {
+      render(<StickyNotes />);
+  
+      const noteToUpdate = dummyNotesList[0];
+      
+      const noteTitle = screen.getByText(noteToUpdate.title);
+      fireEvent.input(noteTitle, { target: { textContent: "Updated Title" } });
+  
+      const noteContent = screen.getByText(noteToUpdate.content);
+      fireEvent.input(noteContent, { target: { textContent: "Updated Content" } });
+  
+      fireEvent.blur(noteContent);
+  
+      const updatedNoteTitle = screen.getByText("Updated Title");
+      const updatedNoteContent = screen.getByText("Updated Content");
+      expect(updatedNoteTitle).toBeInTheDocument();
+      expect(updatedNoteContent).toBeInTheDocument();
+    });
+  });
+
+    describe("Delete StickyNote", () => {
+        test("deletes a note", () => {
+        render(<StickyNotes />);
+    
+        const noteToDelete = dummyNotesList[0];
+        const deleteButton = screen.getByTestId(`delete-button-${noteToDelete.id}`);
+
+        fireEvent.click(deleteButton);
+
+        const deletedNoteTitle = screen.queryByText(noteToDelete.title);
+        expect(deletedNoteTitle).not.toBeInTheDocument();
+        });
+    });
