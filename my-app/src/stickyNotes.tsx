@@ -45,7 +45,7 @@ export const StickyNotes = () => {
         <div>
           <label htmlFor="note-content">Note Content</label>
           <textarea
-          placeholder="Note Content"
+            placeholder="Note Content"
             value={createNote.content}
             onChange={(event) =>
               setCreateNote({ ...createNote, content: event.target.value })
@@ -80,42 +80,47 @@ export const StickyNotes = () => {
 
       <div className="app-container">
         <div className="notes-grid">
-          {notes.map((note) => (
-            <div key={note.id} className="note-item">
-              <div className="notes-header">
-                <ClickLikeButton
-                  item={note}
-                  likedNotes={likedNotes}
-                  setLikedNotes={setLikedNotes}
-                />
-                <button data-testid={`delete-button-${note.id}`}
-                  onClick={() => {
-                    setNotes(notes.filter((n) => n.id !== note.id));
-                    setLikedNotes(likedNotes.filter((n) => n.id !== note.id));
+          {notes.length === 0 ? (
+            <h1>No Notes</h1>
+          ) : (
+            notes.map((note) => (
+              <div key={note.id} className="note-item">
+                <div className="notes-header">
+                  <ClickLikeButton
+                    item={note}
+                    likedNotes={likedNotes}
+                    setLikedNotes={setLikedNotes}
+                  />
+                  <button
+                    data-testid={`delete-button-${note.id}`}
+                    onClick={() => {
+                      setNotes(notes.filter((n) => n.id !== note.id));
+                      setLikedNotes(likedNotes.filter((n) => n.id !== note.id));
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+                <h2
+                  contentEditable="true"
+                  onBlur={(event) => {
+                    const updatedNote = {
+                      ...note,
+                      title: event.target.innerText,
+                    };
+                    setSelectedNote(updatedNote);
+                    setNotes(
+                      notes.map((n) => (n.id === note.id ? updatedNote : n))
+                    );
                   }}
                 >
-                  x
-                </button>
+                  {note.title}
+                </h2>
+                <p contentEditable="true"> {note.content} </p>
+                <p contentEditable="true"> {note.label} </p>
               </div>
-              <h2
-                contentEditable="true"
-                onBlur={(event) => {
-                  const updatedNote = {
-                    ...note,
-                    title: event.target.innerText,
-                  };
-                  setSelectedNote(updatedNote);
-                  setNotes(
-                    notes.map((n) => (n.id === note.id ? updatedNote : n))
-                  );
-                }}
-              >
-                {note.title}
-              </h2>
-              <p contentEditable="true"> {note.content} </p>
-              <p contentEditable="true"> {note.label} </p>
-            </div>
-          ))}
+            ))
+          )}
         </div>
         <div className="toggle">
           <ThemeProvider>
