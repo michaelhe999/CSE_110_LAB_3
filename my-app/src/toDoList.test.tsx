@@ -38,3 +38,22 @@ describe("Check checked items", () => {
 
     });
 });
+
+describe("Check if item order changes", () => {
+    test("checks an item", () => {
+        render(<ToDoList />);
+
+        const itemToCheck1 = dummyGroceryList[1];
+        const itemCheckbox = screen.getByTestId(`checkbox-${itemToCheck1.name}`);
+        fireEvent.click(itemCheckbox);
+
+        const itemsBought = screen.getAllByRole("checkbox");
+        try {
+            expect(itemsBought[0].nextSibling?.textContent).toBe(dummyGroceryList[0].name);
+            expect(itemsBought[1].nextSibling?.textContent).toBe(dummyGroceryList[1].name);
+        } catch (error) {
+            fail("Item order did not change");
+        }
+
+    });
+});
