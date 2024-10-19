@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { StickyNotes } from "./stickyNotes";
 import { dummyNotesList } from "./constant";
 import userEvent from "@testing-library/user-event";
@@ -102,5 +102,35 @@ describe("Deleting the Last Note", () => {
     if (noNotesMessage) {
       expect(noNotesMessage).toBeInTheDocument();
     }
+  });
+});
+
+describe("Like sticky note then update", () => {
+  test("like a note", async () => {
+    render(<StickyNotes />);
+
+    const noteToLike = dummyNotesList[0];
+    const likeButton = screen.getByTestId(`like-button-${noteToLike.id}`);
+    expect(likeButton.textContent).toBe("♡");
+    fireEvent.click(likeButton);
+    await waitFor(() => {
+      expect(likeButton.textContent).toBe("❤️");
+    });
+    const listItems = screen.getAllByRole('listitem');
+    const textFoundInList = listItems.some(item => item.textContent === noteToLike.title);
+    expect(textFoundInList).toBe(true);
+
+
+    fireEvent.click(likeButton);
+    await waitFor(() => {
+      expect(likeButton.textContent).toBe("♡");
+    });
+
+    fireEvent.click(likeButton);
+    await waitFor(() => {
+      expect(likeButton.textContent).toBe("❤️");
+    });
+    
+
   });
 });

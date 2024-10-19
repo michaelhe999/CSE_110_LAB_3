@@ -87,18 +87,18 @@ export const StickyNotes = () => {
               <div key={note.id} className="note-item">
                 <div className="notes-header">
                   <ClickLikeButton
-                    item={note}
-                    likedNotes={likedNotes}
-                    setLikedNotes={setLikedNotes}
+                  item={note}
+                  likedNotes={likedNotes}
+                  setLikedNotes={setLikedNotes}
                   />
                   <button
-                    data-testid={`delete-button-${note.id}`}
-                    onClick={() => {
-                      setNotes(notes.filter((n) => n.id !== note.id));
-                      setLikedNotes(likedNotes.filter((n) => n.id !== note.id));
-                    }}
+                  data-testid={`delete-button-${note.id}`}
+                  onClick={() => {
+                    setNotes(notes.filter((n) => n.id !== note.id));
+                    setLikedNotes(likedNotes.filter((n) => n.id !== note.id));
+                  }}
                   >
-                    x
+                  x
                   </button>
                 </div>
                 <h2

@@ -27,7 +27,7 @@ export function ClickLikeButton({ item, likedNotes, setLikedNotes }: ClickLikeBu
 
     return (
         <div>
-            <button onClick={handleClick}>{buttonShape}</button>
+            <button data-testid={`like-button-${item.id}`} onClick={handleClick}>{buttonShape}</button>
         </div>
     );
 }
