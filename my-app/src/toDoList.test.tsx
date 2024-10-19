@@ -15,28 +15,27 @@ describe("Read ToDoList", () => {
 });
 
 describe("Check checked items", () => {
-    test("checks an item", () => {
-        render(<ToDoList />);
+  test("checks an item", () => {
+    render(<ToDoList />);
 
-        const itemsBoughtText0 = screen.getByText(/Items bought: 0/i);
-        expect(itemsBoughtText0).toBeInTheDocument();
-    
-        const itemToCheck1 = dummyGroceryList[0];
-    
-        const itemCheckbox = screen.getByTestId(`checkbox-${itemToCheck1.name}`);
-        fireEvent.click(itemCheckbox);
-    
-        const itemsBoughtText = screen.getByText(/Items bought: 1/i);
-        expect(itemsBoughtText).toBeInTheDocument();
+    const itemsBoughtText0 = screen.getByText(/Items bought: 0/i);
+    expect(itemsBoughtText0).toBeInTheDocument();
 
-        const itemToCheck2 = dummyGroceryList[1];
-        const itemCheckbox2 = screen.getByTestId(`checkbox-${itemToCheck2.name}`);
-        fireEvent.click(itemCheckbox2);
+    const itemToCheck1 = dummyGroceryList[0];
 
-        const itemsBoughtText2 = screen.getByText(/Items bought: 2/i);
-        expect(itemsBoughtText2).toBeInTheDocument();
+    const itemCheckbox = screen.getByTestId(`checkbox-${itemToCheck1.name}`);
+    fireEvent.click(itemCheckbox);
 
-    });
+    const itemsBoughtText = screen.getByText(/Items bought: 1/i);
+    expect(itemsBoughtText).toBeInTheDocument();
+
+    const itemToCheck2 = dummyGroceryList[1];
+    const itemCheckbox2 = screen.getByTestId(`checkbox-${itemToCheck2.name}`);
+    fireEvent.click(itemCheckbox2);
+
+    const itemsBoughtText2 = screen.getByText(/Items bought: 2/i);
+    expect(itemsBoughtText2).toBeInTheDocument();
+  });
 });
 
 describe("Check if item order changes", () => {
