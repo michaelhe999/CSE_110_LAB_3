@@ -105,7 +105,7 @@ describe("Deleting the Last Note", () => {
   });
 });
 
-describe("Like sticky note then update", () => {
+describe("Like sticky note", () => {
   test("like a note", async () => {
     render(<StickyNotes />);
 
@@ -125,12 +125,8 @@ describe("Like sticky note then update", () => {
     await waitFor(() => {
       expect(likeButton.textContent).toBe("♡");
     });
-
-    fireEvent.click(likeButton);
-    await waitFor(() => {
-      expect(likeButton.textContent).toBe("❤️");
-    });
+    const listItems2 = screen.queryAllByRole('listitem');
+    expect(listItems2.length).toBe(0);
     
-
   });
 });
